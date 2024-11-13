@@ -1,0 +1,21 @@
+.lockscreen {
+  position: absolute;
+  z-index: 99;
+  top: 38px;
+  left: 0;
+
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 0;
+  height: calc(100vh - 38px);
+
+  background-color: silver;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+
+  transition: width 0.3s ease;
+}

@@ -1,0 +1,3 @@
+*.ejs
+/public
+src/components.d.ts

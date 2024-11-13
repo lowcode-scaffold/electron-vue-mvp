@@ -1,0 +1,17 @@
+{
+	"yapi": {
+		"domain": "http://yapi.smart-xwork.cn",
+		"projects": []
+	},
+	"mock": {
+		"mockNumber": "Random.natural(1000,1000)",
+		"mockBoolean": "false",
+		"mockString": "Random.cword(5, 7)",
+		"mockKeyWordEqual": [],
+		"mockKeyWordLike": []
+	},
+	"commonlyUsedBlock": [
+		"vue-mvp 模块"
+	],
+	"syncFolder": ""
+}

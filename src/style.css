@@ -1,0 +1,23 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  text-rendering: optimizeLegibility;
+
+  color-scheme: light;
+  background-color: transparent;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  font-synthesis: none;
+}
+
+body {
+  overflow: hidden;
+  display: flex;
+  place-items: center;
+
+  min-width: 320px;
+  margin: 0;
+}
