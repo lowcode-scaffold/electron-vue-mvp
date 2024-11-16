@@ -11,6 +11,12 @@ const handle: Record<
   },
   setMaximize: (event) => {
     const window = BrowserWindow.fromWebContents(event.sender);
+    if (window?.isMaximized()) {
+      window.unmaximize();
+      window.setSize(1366, 768, true);
+      window.center();
+      return;
+    }
     window?.maximize();
   },
   setMinimize: (event) => {

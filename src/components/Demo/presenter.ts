@@ -1,15 +1,13 @@
+import { useConfirm } from "primevue/useconfirm";
 import Service from "./service";
 import { useModel } from "./model";
 import {
   closeWindow,
+  getMac,
   setMaximize,
   setMinimize,
 } from "@/utils/ipcRendererService";
-import { useConfirm } from "primevue/useconfirm";
-import { getGlobalData } from "@/utils/iframeWebService/globalData";
 import { useAppStore } from "@/store/appStore";
-import { watch } from "vue";
-import { logout } from "./api";
 
 export const usePresenter = () => {
   const model = useModel();
@@ -17,12 +15,11 @@ export const usePresenter = () => {
   const confirm = useConfirm();
   const appStore = useAppStore();
 
-  watch(
-    () => appStore.logOutConfirm.value,
-    () => {
-      handleClose();
-    },
-  );
+  const handleGetMac = () => {
+    getMac().then((mac) => {
+      model.mac.value = mac;
+    });
+  };
 
   const handleMaximize = () => {
     setMaximize();
@@ -33,12 +30,9 @@ export const usePresenter = () => {
   };
 
   const handleClose = () => {
-    if (getGlobalData().inLoginPage) {
-      closeWindow();
-      return;
-    }
+    console.log(898);
     confirm.require({
-      message: "关闭窗口将自动退出登录，是否继续？",
+      message: "即将关闭窗口，是否继续？",
       header: "退出确认",
       rejectProps: {
         label: "取消",
@@ -46,22 +40,26 @@ export const usePresenter = () => {
         outlined: true,
       },
       acceptProps: {
-        label: "确认",
+        label: "关闭",
       },
       accept: () => {
-        logout({ accessToken: appStore.token.value }).finally(() => {
-          closeWindow();
-        });
+        closeWindow();
       },
       reject: () => {},
     });
   };
 
+  const handleToggleTabMode = () => {
+    appStore.tabMode.value = !appStore.tabMode.value;
+  };
+
   return {
     model,
     service,
+    handleGetMac,
     handleMaximize,
     handleMinimi,
     handleClose,
+    handleToggleTabMode,
   };
 };

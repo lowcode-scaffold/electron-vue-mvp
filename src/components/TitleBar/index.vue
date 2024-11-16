@@ -4,7 +4,6 @@
     <div class="btn btn2" @click="presenter.handleMaximize"></div>
     <div class="btn btn3" @click="presenter.handleClose"></div>
   </div>
-  <ConfirmDialog></ConfirmDialog>
 </template>
 <script lang="ts" setup>
 import { usePresenter } from "./presenter";
@@ -36,22 +35,18 @@ const presenter = usePresenter();
   content: "";
 
   position: absolute;
-  top: 100%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 
   width: 50%;
   height: 10%;
 
-  opacity: 0;
   background: #222;
 
   transition: 300ms;
 }
-.btn1:hover::before {
-  top: 50%;
-  opacity: 1;
-}
+
 .btn2 {
   position: relative;
   overflow: hidden;
@@ -61,14 +56,13 @@ const presenter = usePresenter();
   content: "";
 
   position: absolute;
-  top: 100%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 
   width: 45%;
   height: 45%;
 
-  opacity: 0;
   background: #222;
 
   transition: 300ms;
@@ -77,23 +71,18 @@ const presenter = usePresenter();
   content: "";
 
   position: absolute;
-  top: 100%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) rotate(-45deg);
 
   width: 15%;
   height: 80%;
 
-  opacity: 0;
   background: #39ea49;
 
   transition: 300ms;
 }
-.btn2:hover::before,
-.btn2:hover::after {
-  top: 50%;
-  opacity: 1;
-}
+
 .btn3 {
   position: relative;
   overflow: hidden;
@@ -103,14 +92,13 @@ const presenter = usePresenter();
   content: "";
 
   position: absolute;
-  top: 100%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) rotate(-45deg);
 
   width: 15%;
   height: 50%;
 
-  opacity: 0;
   background: #222;
 
   transition: 300ms;
@@ -119,21 +107,15 @@ const presenter = usePresenter();
   content: "";
 
   position: absolute;
-  top: 100%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) rotate(45deg);
 
   width: 15%;
   height: 50%;
 
-  opacity: 0;
   background: #222;
 
   transition: 300ms;
-}
-.btn3:hover::before,
-.btn3:hover::after {
-  top: 50%;
-  opacity: 1;
 }
 </style>

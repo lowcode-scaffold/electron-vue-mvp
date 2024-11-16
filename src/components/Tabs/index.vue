@@ -1,5 +1,5 @@
 <template>
-  <div class="tabs-group">
+  <div class="tabs-group" :style="`background-color:${bgColor}`">
     <draggable
       v-model="tabsStore.tabs.value"
       @start="presenter.handleStartMove"
@@ -15,7 +15,7 @@
         <div
           :class="[
             'tab',
-            lockScreen ? 'tab-drag' : '',
+            appStore.lockScreen.value ? 'tab-drag' : '',
             element.id === tabsStore.currentTabId.value ? 'tab-active' : '',
           ]"
           @mousedown="tabsStore.handleChangeTab(element)"
@@ -49,6 +49,7 @@ import { usePresenter } from "./presenter";
 import { ref } from "vue";
 import { refresh } from "@/utils/iframeWebService";
 import { useAppStore } from "@/store/appStore";
+import { computed } from "vue";
 
 const menu = ref<ContextMenuMethods | null>(null);
 const items = ref([
@@ -75,14 +76,15 @@ const handleRightClick = (event: MouseEvent) => {
 };
 
 const tabsStore = useTabsStore();
-const { lockScreen } = useAppStore();
+const appStore = useAppStore();
 const presenter = usePresenter();
 const { model } = presenter;
+
+const bgColor = computed(() => {
+  return appStore.appFocus.value ? "#cdcdcd" : "#E8E8E8";
+});
 </script>
 <style lang="scss" scoped>
-$white: #fff;
-$gray-dark: #dee1e6;
-$gray-light: #e7eaef;
 .tabs-group {
   display: flex;
   align-items: center;
@@ -94,7 +96,7 @@ $gray-light: #e7eaef;
 
   color: rgba(0, 0, 0, 0.85);
 
-  background-color: #dee1e6;
+  background-color: #cdcdcd;
 
   -webkit-app-region: drag;
 }
@@ -171,7 +173,7 @@ $gray-light: #e7eaef;
     width: 30px;
     height: 20px;
 
-    background-color: $gray-dark;
+    background-color: v-bind("bgColor");
 
     /* transition: background-color 0.2s; */
   }
@@ -182,19 +184,19 @@ $gray-light: #e7eaef;
   }
 
   &:hover {
-    background-color: $gray-light;
+    background-color: #dadada;
 
     &::before {
       right: 0;
-      background-color: $gray-light;
+      background-color: #dadada;
     }
   }
   &.tab-active {
-    background-color: $white;
+    background-color: #fff;
 
     &::before {
       right: 0;
-      background-color: $white;
+      background-color: #fff;
     }
   }
 
@@ -207,8 +209,8 @@ $gray-light: #e7eaef;
     align-items: center;
     justify-content: center;
 
-    width: 10px;
-    height: 10px;
+    width: 20px;
+    height: 20px;
     padding: 6px;
 
     border-radius: 100%;
@@ -224,7 +226,7 @@ $gray-light: #e7eaef;
       width: 2px;
       height: 12px;
 
-      background-color: #666;
+      background-color: #2f2f2f;
     }
 
     &::before {
@@ -232,7 +234,7 @@ $gray-light: #e7eaef;
     }
 
     &:hover {
-      background-color: #ddd;
+      background-color: #8c8987;
     }
   }
 }

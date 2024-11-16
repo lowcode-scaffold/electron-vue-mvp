@@ -3,7 +3,7 @@ import { useAppStore } from "@/store/appStore";
 import { refresh } from "../iframeWebService";
 
 const tabsStore = useTabsStore();
-const { logOutConfirm } = useAppStore();
+const appStore = useAppStore();
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const handle: Record<string, (data: any) => void> = {
@@ -13,10 +13,16 @@ const handle: Record<string, (data: any) => void> = {
     return "打开标签页成功";
   },
   closeWindow: () => {
-    logOutConfirm.value++;
+    appStore.logOutConfirm.value++;
   },
   refreshCurrentIframe: () => {
     refresh();
+  },
+  windowFocus: () => {
+    appStore.appFocus.value = true;
+  },
+  windowBlur: () => {
+    appStore.appFocus.value = false;
   },
 };
 

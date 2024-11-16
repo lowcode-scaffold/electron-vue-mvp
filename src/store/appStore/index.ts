@@ -13,6 +13,10 @@ const activeRole = ref({
   roleCode: "",
 });
 
+const appFocus = ref(true);
+
+const tabMode = ref(false);
+
 export const useAppStore = () => {
   return {
     logOutConfirm,
@@ -20,5 +24,7 @@ export const useAppStore = () => {
     token,
     activeRole,
     appVersion,
+    appFocus,
+    tabMode,
   };
 };

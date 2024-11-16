@@ -131,3 +131,15 @@ export const refreshCurrentIframe = (webContents: Electron.WebContents) => {
     cmd: "refreshCurrentIframe",
   });
 };
+
+export const windowFocus = (webContents: Electron.WebContents) => {
+  return request(webContents, {
+    cmd: "windowFocus",
+  });
+};
+
+export const windowBlur = (webContents: Electron.WebContents) => {
+  return request(webContents, {
+    cmd: "windowBlur",
+  });
+};

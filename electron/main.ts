@@ -6,6 +6,8 @@ import {
   addNewTab,
   closeWindow,
   refreshCurrentIframe,
+  windowBlur,
+  windowFocus,
 } from "./ipcMainService";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -39,25 +41,25 @@ function createWindow() {
   const win = new BrowserWindow({
     title: "electron-vue-mvp",
     icon: path.join(process.env.VITE_PUBLIC, "icon.png"),
-    // titleBarStyle: "customButtonsOnHover",
     // width,
     // height,
     // height: 50,
-    frame: false,
+    // frame: true, // 是否有边框，窗口创建后无法更改
     transparent: false,
     fullscreenable: false,
     useContentSize: false,
     maximizable: true,
     fullscreen: false,
     show: false,
-    minWidth: 1440,
+    minWidth: 1366,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
     },
   });
-  // win.setMenuBarVisibility(false);
-  // win.setAutoHideMenuBar(true);
-  // win.setMenu(null);
+
+  win.setMenuBarVisibility(false);
+  win.setAutoHideMenuBar(true);
+  win.setMenu(null);
   win.maximize();
   // win.setResizable(false);
   // win.setMinimizable(true);
@@ -94,6 +96,14 @@ function createWindow() {
     // win.destroy();
   });
 
+  win.on("focus", () => {
+    windowFocus(win.webContents);
+  });
+
+  win.on("blur", () => {
+    windowBlur(win.webContents);
+  });
+
   win.webContents.on("before-input-event", (event, input) => {
     if (input.key.toLowerCase() === "f5") {
       refreshCurrentIframe(win.webContents);
@@ -101,7 +111,7 @@ function createWindow() {
     }
     if (input.key.toLowerCase() === "f12") {
       if (import.meta.env.VITE_MODE !== "prod") {
-        win.webContents.openDevTools({ mode: "undocked" });
+        win.webContents.openDevTools({ mode: "bottom" });
       }
       event.preventDefault();
     }
@@ -157,15 +167,6 @@ app.on("activate", () => {
 app.whenReady().then(() => {
   addIpcMainEventListener();
   createWindow();
-  // tray = new Tray(
-  //   nativeImage.createFromPath(path.join(process.env.VITE_PUBLIC, "icon.png")),
-  // );
-  // const contextMenu = Menu.buildFromTemplate([
-  //   //{ label: "退出", type: "normal" },
-  // ]);
-  // tray.setToolTip("electron-vue-mvp");
-  // tray.setContextMenu(contextMenu);
-  // Menu.setApplicationMenu(null); // 禁止 alt 左上角显示菜单
 });
 
 //限制只能开启一个应用

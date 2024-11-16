@@ -21,8 +21,7 @@
         />
 
         <Button
-          label="进入系统"
-          severity="info"
+          :label="model.loading.value ? undefined : '进入系统'"
           :loading="model.loading.value"
           :disabled="!model.pwd.value"
           @click="presenter.handleUnlock"

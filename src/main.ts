@@ -20,6 +20,12 @@ app.directive("tooltip", Tooltip);
 
 const Noir = definePreset(Aura, {
   semantic: {
+    focusRing: {
+      width: "0",
+      style: "none",
+      color: "",
+      offset: "",
+    },
     primary: {
       50: "{zinc.50}",
       100: "{zinc.100}",
@@ -36,16 +42,16 @@ const Noir = definePreset(Aura, {
     colorScheme: {
       light: {
         primary: {
-          color: "{zinc.950}",
-          inverseColor: "#ffffff",
-          hoverColor: "{zinc.900}",
-          activeColor: "{zinc.800}",
+          color: "#0052D9",
+          inverseColor: "#0052D9",
+          hoverColor: "#0052D9",
+          activeColor: "#0052D9",
         },
         highlight: {
-          background: "{zinc.950}",
-          focusBackground: "{zinc.700}",
-          color: "#ffffff",
-          focusColor: "#ffffff",
+          background: "none",
+          focusBackground: "none",
+          color: "red",
+          focusColor: "none",
         },
       },
       dark: {
