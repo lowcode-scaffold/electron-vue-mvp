@@ -28,7 +28,6 @@
         >
           <p class="text">{{ element.name }}</p>
           <div
-            v-if="tabsStore.tabs.value.length !== 1"
             class="close-button"
             @mousedown="(e) => e.stopPropagation()"
             @click="tabsStore.handleCloseTab(element)"

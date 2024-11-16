@@ -1,7 +1,7 @@
 import { useTabsStore } from "@/store/tabs";
 import { setGlobalData } from "./globalData";
 import { useAppStore } from "@/store/appStore";
-import { getMac } from "../ipcRendererService";
+import * as ipc from "../ipcRendererService";
 
 const tabsStore = useTabsStore();
 const appStore = useAppStore();
@@ -44,7 +44,7 @@ const handle: Record<string, (data: any) => void> = {
   getAppInfo: async () => {
     let mac = "";
     try {
-      mac = await getMac();
+      mac = await ipc.getMac();
     } catch (ex) {
       console.log(ex);
     }
@@ -52,6 +52,15 @@ const handle: Record<string, (data: any) => void> = {
       version: appStore.appVersion.value,
       mac: mac,
     };
+  },
+  getMac: () => {
+    return ipc.getMac();
+  },
+  setMaximize: () => {
+    return ipc.setMaximize();
+  },
+  setMinimize: () => {
+    return ipc.setMinimize();
   },
 };
 

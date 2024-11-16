@@ -44,7 +44,7 @@ function createWindow() {
     // width,
     // height,
     // height: 50,
-    // frame: true, // 是否有边框，窗口创建后无法更改
+    frame: false, // 是否有边框，窗口创建后无法更改
     transparent: false,
     fullscreenable: false,
     useContentSize: false,

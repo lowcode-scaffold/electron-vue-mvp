@@ -15,7 +15,9 @@ export const usePresenter = () => {
         model.pwd.value = "";
       })
       .catch((ex: { code: string; message: string }) => {
-        model.invalidMessage.value = ex.message || ex.toString();
+        appStore.lockScreen.value = false;
+        model.pwd.value = "";
+        // model.invalidMessage.value = ex.message || ex.toString();
       });
   };
 

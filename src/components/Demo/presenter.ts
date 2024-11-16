@@ -8,12 +8,14 @@ import {
   setMinimize,
 } from "@/utils/ipcRendererService";
 import { useAppStore } from "@/store/appStore";
+import { useTabsStore } from "@/store/tabs";
 
 export const usePresenter = () => {
   const model = useModel();
   const service = new Service(model);
   const confirm = useConfirm();
   const appStore = useAppStore();
+  const tabsStore = useTabsStore();
 
   const handleGetMac = () => {
     getMac().then((mac) => {
@@ -50,6 +52,12 @@ export const usePresenter = () => {
 
   const handleToggleTabMode = () => {
     appStore.tabMode.value = !appStore.tabMode.value;
+    if (appStore.tabMode.value) {
+      tabsStore.handleAddTab(import.meta.env.VITE_ENTRY_URL);
+    } else {
+      tabsStore.tabs.value = [];
+      tabsStore.iframeList.value = [];
+    }
   };
 
   return {

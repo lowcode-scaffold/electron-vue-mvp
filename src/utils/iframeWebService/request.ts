@@ -81,23 +81,26 @@ function invokeErrorCallback(cbid: string, res: unknown) {
 export const addIframeWebEventListener = () => {
   window.addEventListener("message", async (event) => {
     const message = event.data as {
-      exiaCmd: string;
+      iframeWebCmd: string;
       cbid: string;
       code: number;
       data: never;
     };
-    if (message.exiaCmd) {
+    if (message.iframeWebCmd) {
       console.log(message);
-      if (message.exiaCmd !== "postMessageCallback") {
-        if (handle[message.exiaCmd]) {
+      if (message.iframeWebCmd !== "postMessageCallback") {
+        if (handle[message.iframeWebCmd]) {
           try {
-            const res = await handle[message.exiaCmd](message.data);
+            const res = await handle[message.iframeWebCmd](message.data);
             invokeCallback(message.cbid, res);
           } catch (ex: unknown) {
             invokeErrorCallback(message.cbid, ex);
           }
         } else {
-          invokeErrorCallback(message.cbid, `方法不存在：${message.exiaCmd}`);
+          invokeErrorCallback(
+            message.cbid,
+            `方法不存在：${message.iframeWebCmd}`,
+          );
         }
       } else {
         if (message.code === 200) {
