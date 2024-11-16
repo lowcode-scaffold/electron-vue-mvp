@@ -30,7 +30,6 @@ export const usePresenter = () => {
   };
 
   const handleClose = () => {
-    console.log(898);
     confirm.require({
       message: "即将关闭窗口，是否继续？",
       header: "退出确认",

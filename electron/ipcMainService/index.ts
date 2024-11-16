@@ -80,7 +80,7 @@ export const addIpcMainEventListener = () => {
       event,
       message: { cmd: string; cbid: string; data: unknown; code?: number },
     ) => {
-      // console.log("ipcRenderer get message", message);
+      // 处理渲染进程主动发的消息
       if (message.cmd !== "postMessageCallback") {
         if (handle[message.cmd]) {
           try {
@@ -96,7 +96,9 @@ export const addIpcMainEventListener = () => {
             `方法不存在：${message.cmd}`,
           );
         }
-      } else {
+      }
+      // 处理发出去的请求的回调
+      else {
         if (message.code === 200) {
           (callbacks[message.cbid] || function () {})(message.data);
         } else {
@@ -109,6 +111,13 @@ export const addIpcMainEventListener = () => {
   );
 };
 
+// 主进程向 ipcRenderer 发起关闭请求，ipcRenderer 弹框确认，ipcRenderer 再通知主进程关闭窗口
+export const closeWindow = (webContents: Electron.WebContents) => {
+  return request(webContents, {
+    cmd: "closeWindow",
+  });
+};
+
 export const addNewTab = (
   webContents: Electron.WebContents,
   data: { url: string },
@@ -116,13 +125,6 @@ export const addNewTab = (
   return request(webContents, {
     cmd: "addNewTab",
     data: data,
-  });
-};
-
-// 主进程向 ipcRenderer 发起关闭请求，ipcRenderer 弹框确认，ipcRenderer 再通知主进程关闭窗口
-export const closeWindow = (webContents: Electron.WebContents) => {
-  return request(webContents, {
-    cmd: "closeWindow",
   });
 };
 

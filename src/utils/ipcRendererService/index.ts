@@ -63,6 +63,7 @@ function invokeErrorCallback(cbid: string, res: unknown) {
 export const addIpcRendererEventListener = () => {
   window.ipcRenderer?.addEventListener("message", async (message) => {
     console.log("ipcRenderer get message", message);
+    // 处理主进程主动发的消息
     if (message.cmd !== "postMessageCallback") {
       if (handle[message.cmd]) {
         try {
@@ -74,7 +75,9 @@ export const addIpcRendererEventListener = () => {
       } else {
         invokeErrorCallback(message.cbid, `方法不存在：${message.cmd}`);
       }
-    } else {
+    }
+    // 处理回调
+    else {
       if (message.code === 200) {
         (callbacks[message.cbid] || function () {})(message.data);
       } else {
@@ -104,6 +107,10 @@ export const closeWindow = () => {
   });
 };
 
+/**
+ * @description 获取 mac 地址
+ * @returns
+ */
 export const getMac = () => {
   return request<string>({
     cmd: "getMac",
